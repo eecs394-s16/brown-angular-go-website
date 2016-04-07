@@ -57,12 +57,9 @@
 					<ul class="nav nav-pills nav-stacked">
 						<li ng-class="{active: s.title == selected.title}" ng-repeat="s in songs">
 							<a href="" ng-click="get($index)">{{s.title}}</a>
-							<button class="btn btn-primary" ng-click="downvote($index)">
-								&#10096;
-							</button>
-							<span class="glyphicon-class">{{s.votes}}</span>
-							<button class="btn btn-primary" ng-click="upvote($index)">
-								&#10097;
+							{{s.votes}}
+							<button class="btn btn-primary" ng-click="like($index)">
+								&hearts;
 							</button>
 						</li>
 					</ul>
@@ -84,19 +81,6 @@
 				</div>
 			</div>
 		</div>
-		<!--
-		<div class="jumbotron">
-			<h1>Bootstrap's working</h1>
-			<p>
-				So is <i class="fa fa-spinner fa-spin"></i> font-awesome.
-			</p>
-		</div>
-		<div class="container">
-			<input type="text" placeholder="type here" ng-model="yes">
-				<p>Is Angular working? <span ng-bind="yes"></span></p>
-		</div>
-	-->
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>-->
 	<script src="http://code.angularjs.org/1.2.10/angular-resource.min.js"></script>
 	<script>
 	// new dependency: ngResource is included just above
@@ -154,17 +138,12 @@
 			song.$save();
 			$scope.list(idx);
 		};
-		$scope.upvote = function(idx){
-			var song = $scope.songs[idx]
-			song.votes = song.votes + 1
+		$scope.like = function(idx){
+			var song = $scope.songs[idx];
+			song.votes = song.votes + 1;
 			song.$save();
 			$scope.list(idx);
-		};
-		$scope.downvote = function(idx){
-			var song = $scope.songs[idx]
-			song.votes = song.votes - 1
-			song.$save();
-			$scope.list(idx);
+
 		};
 		$scope.remove = function(idx){
 			$scope.songs[idx].$delete();
