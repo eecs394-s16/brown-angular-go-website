@@ -7,10 +7,10 @@ myapp.controller("MainCtl", ["$scope", "$resource", function($scope, $resource){
 	$scope.list = function(idx){
 		Song.query(function(data){
 			$scope.songs = data;
-			if(idx != undefined) {
-				$scope.selected = $scope.songs[idx];
-				$scope.selected.idx = idx;
-			}
+			// if(idx != undefined) {
+			// 	$scope.selected = $scope.songs[idx];
+			// 	$scope.selected.idx = idx;
+			// }
 		}, function(error){
 			alert(error.data);
 		});

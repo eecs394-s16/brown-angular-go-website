@@ -4,38 +4,43 @@
 		<script src="scripts/angular.min.js"></script>
 		<title>Jukebox</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	</head>
 	<body ng-controller="MainCtl">
-		<nav class="navbar navbar-inverse" role="navigation">
-			<div class="container-fluid">
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">Jukebox</a>
+					<a class="navbar-brand" href="/">Jukebox</a>
 				</div>
 
+				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="#">Home</a></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="#">New Playlist</a></li>
+						<li><a href="#">Join Playlist</a></li>
 						<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown">Project Files <b class="caret"></b></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Report</a></li>
-								<li><a href="#">Source Code</a></li>
-							</ul>
-						</li>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Playlists <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Playlist 1</a></li>
+								<li><a href="#">Playlist 2</a></li>
+								<li><a href="#">Playlist 3</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="#">Remove Playlist</a></li>
+				          </ul>
+				        </li>
 					</ul>
 				</div>
 			</div>
 		</nav>
+		<!--
 		<div class="page-header text-center">
 			<h1>Jukebox</h1>
 			<h4>
@@ -44,27 +49,17 @@
 				</a>
 			</h4>
 		</div>
+		-->
 		<div class="jumbotron">
-			<button class="btn btn-primary pull-right" ng-click="add()">
-				<i class="fa fa-plus"></i> Add song
-			</button>
 			<h1>Party Playlist 2011!</h1>
 		</div>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-3 well">
-					<h3>Songs</h3>
-					<ul class="nav nav-pills nav-stacked">
-						<li ng-class="{active: s.title == selected.title}" ng-repeat="s in songs">
-							<a href="" ng-click="get($index)">{{s.title}}</a>
-							{{s.votes}}
-							<button class="btn btn-primary" ng-click="like($index)">
-								&hearts;
-							</button>
-						</li>
-					</ul>
-				</div>
-				<div class="col-sm-6" ng-show="selected">
+					<button class="btn btn-primary pull-right" ng-click="add()">
+						<i class="fa fa-plus"></i> Add song
+					</button>
+					<div class="col-sm-6" ng-show="selected">
 					<h2>{{selected.title}}</h2>
 					<dl class="dl-horizontal">
 						<dt>Artist:</dt>
@@ -72,15 +67,56 @@
 					</dl>
 				</div>
 				<div class="col-sm-3" ng-show="selected">
+					<!--
 					<button class="btn btn-primary form-control" ng-click="update(selected.id)">
 						<i class="fa fa-pencil"></i> Update this Song
 					</button>
+					-->
 					<button class="btn btn-danger form-control" ng-click="remove(selected.id)">
 						<i class="fa fa-trash-o"></i> Remove this Song
 					</button>
 				</div>
+				<div class="col-sm-3 well">
+					<hr>
+					<!--
+					<ul class="nav nav-pills nav-stacked">
+						<li ng-class="{active: s.title == selected.title}" ng-repeat="s in songs">
+							<a href="" ng-click="get($index)">{{s.title}} <small>by {{s.artist}}</small></a>
+							<button class="btn btn-success-outline" ng-click="like(s.id)">
+								&hearts;
+							</button>
+							{{s.votes}}
+						</li>
+					</ul>
+					-->
+					<table class = "table table-striped">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Artist</th>
+								<th>Votes</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-class="{success: s.title == selected.title}" ng-repeat="s in songs">
+								<td><a href="" ng-click="get($index)">{{s.title}}</a></td>
+								<td>{{s.artist}}</a></td>
+								<td>
+									<button class="btn btn-success-outline" ng-click="like(s.id)">
+										&hearts;
+									</button>
+									{{s.votes}}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
+	<script src="static/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="static/js/bootstrap.min.js"></script>
 	<script src="http://code.angularjs.org/1.2.10/angular-resource.min.js"></script>
 	<script src="scripts/controller.js"></script>
 	</body>

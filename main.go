@@ -150,11 +150,12 @@ func getSongById(id int) (Song, int) {
 	return Song{}, -1
 }
 
-var id = 0
+var id = -1
 
 // increments id and returns the value
 func getNextId() int {
-	id += 1
+	//id = length(songs)
+	id = id + 1
 	return id
 }
 
