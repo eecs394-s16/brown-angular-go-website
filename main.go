@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"sort"
 
 	"github.com/gorilla/mux"
 //	"github.com/jinzhu/gorm"
@@ -25,6 +26,20 @@ type Song struct {
   Artist string `json:"artist" `
   Votes  int    `json:"votes"  `
   Id     int    `json:"id"     `
+}
+
+type ByVote []Song
+
+func (slice ByVote) Len() int {
+    return len(slice)
+}
+
+func (slice ByVote) Less(i, j int) bool {
+    return slice[i].Votes < slice[j].Votes;
+}
+
+func (slice ByVote) Swap(i, j int) {
+    slice[i], slice[j] = slice[j], slice[i]
 }
 
 var songs = make([]Song, 0)
@@ -61,7 +76,9 @@ func (fn handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func listSongs(w http.ResponseWriter, r *http.Request) (interface{}, *handlerError) {
+	sort.Sort(sort.Reverse(ByVote(songs)))
 	return songs, nil
+	// return playlist.Songs, nil
 }
 
 func getSong(w http.ResponseWriter, r *http.Request) (interface{}, *handlerError) {
@@ -135,12 +152,12 @@ func removeSong(w http.ResponseWriter, r *http.Request) (interface{}, *handlerEr
 		return nil, &handlerError{nil, "Could not find entry " + param, http.StatusNotFound}
 	}
 
-	// remove a book from the list
+	// remove a song from the list
 	songs = append(songs[:index], songs[index+1:]...)
+	//playlist.Songs = append(playlist.Songs[:index], songs[index+1:]...)
 	return make(map[string]string), nil
 }
 
-// searches the books for the book with `id` and returns the book and it's index, or -1 for 404
 func getSongById(id int) (Song, int) {
 	for i, s := range songs {
 		if s.Id == id {
@@ -154,7 +171,6 @@ var id = -1
 
 // increments id and returns the value
 func getNextId() int {
-	//id = length(songs)
 	id = id + 1
 	return id
 }
@@ -191,22 +207,3 @@ func main() {
 	err := http.ListenAndServe(addr, nil)
 	fmt.Println(err.Error())
 }
-
-// func main() {
-// 	// command line flags
-// 	port := flag.Int("port", 8080, "port to serve on")
-// 	dir := flag.String("directory", "web/", "directory of web files")
-// 	flag.Parse()
-
-// 	// handle all requests by serving a file of the same name
-// 	fs := http.Dir(*dir)
-// 	fileHandler := http.FileServer(fs)
-// 	http.Handle("/", fileHandler)
-
-// 	log.Printf("Running on port %d\n", *port)
-
-// 	addr := fmt.Sprintf("127.0.0.1:%d", *port)
-// 	// this call blocks -- the progam runs here forever
-// 	err := http.ListenAndServe(addr, nil)
-// 	fmt.Println(err.Error())
-// }
