@@ -78,13 +78,13 @@
 						</tbody>
 					</table>
 					<div class="player text-center">
-						<button type="button" id="button_bw" class="btn" onclick='buttonBackPress()'>
+						<button type="button" id="button_bw" class="btn" ng-click='buttonBackPress()'>
 							<i class="fa fa-fast-backward"></i>
 						</button>
-						<button type="button" id="button_play" class="btn" onclick='buttonPlayPress()'>
+						<button type="button" id="button_play" class="btn" ng-click='get(selected.id)'>
 							<i class="fa fa-play"></i>
 						</button>
-						<button type="button" id="button_ffw" class="btn" onclick='buttonFastforwardPress()'>
+						<button type="button" id="button_ffw" class="btn" ng-click='buttonForwardPress()'>
 							<i class="fa fa-fast-forward"></i>
 						</button>
 					</div>
@@ -100,6 +100,7 @@
 					<table class = "table table-striped">
 						<thead>
 							<tr>
+								<th></th>
 								<th>Title</th>
 								<th>Artist</th>
 								<th>Votes</th>
@@ -107,6 +108,9 @@
 						</thead>
 						<tbody>
 							<tr ng-class="{success: s.title == selected.title}" ng-repeat="s in songs">
+								<td>
+										<button type="button" id="button_song_play_{{ s.id }}" class="btn" ng-click="get(s.id)"><img src="static/img/play-icon.png" height="30em" width="30em"></button>
+								</td>
 								<td><a href="" ng-click="get(s.id)">{{s.title}}</a></td>
 								<td>{{s.artist}}</a></td>
 								<td>
@@ -130,5 +134,7 @@
     <script src="static/js/bootstrap.min.js"></script>
 	<script src="http://code.angularjs.org/1.2.10/angular-resource.min.js"></script>
 	<script src="scripts/controller.js"></script>
+	<script src="scripts/player.js"></script>
+	<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	</body>
 </html>
