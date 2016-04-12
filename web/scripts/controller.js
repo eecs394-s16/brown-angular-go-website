@@ -1,5 +1,5 @@
 // new dependency: ngResource is included just above
-var myapp = new angular.module("myapp", ["ngResource"]);
+var myapp = new angular.module("myapp", ["ngResource", "ui.bootstrap"]);
 myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, $resource, $filter){
 
 	var Song = $resource("/songs/:id", {id: '@id'}, {});
@@ -20,7 +20,6 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 	$scope.get = function(id){
 		// NOAH added this to get the song by song.id not index in list
 		var song = $filter("filter")($scope.songs, {id: id})[0];
-		//Song.get({id: $scope.songs[idx].id}, function(data){
 		Song.get({id: song.id}, function(data){
 			$scope.selected = data;
 			$scope.selected.id = id;
@@ -67,7 +66,7 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 		console.log('song', song);
 		song.votes = song.votes + 1;
 		song.$save();
-		$scope.list(id);
+    	$scope.list(id);
 
 	};
 	$scope.remove = function(id){
@@ -80,49 +79,4 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 		$scope.selected = null;
 		$scope.list();
 	};
-	// $scope.buttonBackPress = function() {
-	//     console.log("button back invoked.");
-	// }
-
-	// $scope.buttonBackPress = function() {
-	// 	console.log("button forward invoked.");
-	// }
-
-	// $scope.buttonPlayPress = function() {
-	// 	if(state=='stop'){
-	// 		state='play';
-	// 		var button = d3.select("#button_play").classed('btn-success', true); 
-	// 		button.select("i").attr('class', "fa fa-pause");  
-	// 	}
-	// 	else if(state=='play' || state=='resume'){
-	// 		state = 'pause';
-	// 		d3.select("#button_play i").attr('class', "fa fa-play"); 
-	// 	}
-	// 	else if(state=='pause'){
-	// 		state = 'resume';
-	// 		d3.select("#button_play i").attr('class', "fa fa-pause");        
-	// 	}
-	// 	console.log("button play pressed, play was "+state);
-
-	// }
-
-	// var state = 'stop';
-	// $scope.buttonSongPlayPress = function(id) {
-
-	// 	var button_str = "#button_song_play_".concat(id);
-	// 	if(state=='stop'){
-	// 		state='play';
-	// 		var button = d3.select(button_str).classed('btn-success', true); 
-	// 		button.select("img").attr('src', "static/img/pause-icon.png");  
-	// 	}
-	// 	else if(state=='play' || state=='resume'){
-	// 		state = 'pause';
-	// 		d3.select(button_str.concat(" img")).attr('src', "static/img/pause-icon.png"); 
-	// 	}
-	// 	else if(state=='pause'){
-	// 		state = 'resume';
-	// 		d3.select(button_str.concat(" img")).attr('src', "static/img/playing-icon.png");        
-	// 	}
-	// 	console.log("button play pressed, play was "+state);
-	// }
 }]);

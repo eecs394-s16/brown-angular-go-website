@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en" ng-app="myapp">
 	<head>
-		<script src="scripts/angular.min.js"></script>
 		<title>Jukebox</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+		<script src="static/js/angular.min.js"></script>
+		<link rel="stylesheet" href="static/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	</head>
 	<body ng-controller="MainCtl">
 		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -40,28 +40,20 @@
 				</div>
 			</div>
 		</nav>
-		<!--
-		<div class="page-header text-center">
-			<h1>Jukebox</h1>
-			<h4>
-				<a href="https://www.cs.northwestern.edu/academics/courses/394/">
-					Northwestern University EECS 394
-				</a>
-			</h4>
-		</div>
-		-->
 		<div class="jumbotron">
 			<h1>Party Playlist 2011!</h1>
 		</div>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-3 well">
-					<div class="col-sm-6" ng-show="selected">
+				<div class="col-sm-3">
+					<!--<div class="col-sm-6" ng-show="selected">-->
+					<div class="col-sm-6">
 					<table class="table">
 						<tbody>
 							<tr>
 								<td colspan="2">
-									<h2>{{selected.title}}</h2>
+									<!--<h2>{{selected.title}}</h2>-->
+									<h2>Stairway To Heaven</h2>
 								</td>
 								<td rowspan="2">
 									<img src="static/img/default-album-artwork.png" align="middle">
@@ -71,36 +63,38 @@
 								<td>
 								<dl class="dl-horizontal">
 									<dt>By:</dt>
-									<dd>{{selected.artist}}</dd>
+									<!--<dd>{{selected.artist}}</dd>-->
+									<dd>Led Zeppelin</dd>
 								</dl>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 					<div class="player text-center">
-						<button type="button" id="button_bw" class="btn" ng-click='buttonBackPress()'>
+						<button type="button" id="button_bw" class="btn">
 							<i class="fa fa-fast-backward"></i>
 						</button>
-						<button type="button" id="button_play" class="btn" ng-click='get(selected.id)'>
+						<button type="button" id="button_play" class="btn btn-primary active">
 							<i class="fa fa-play"></i>
 						</button>
-						<button type="button" id="button_ffw" class="btn" ng-click='buttonForwardPress()'>
+						<button type="button" id="button_ffw" class="btn">
 							<i class="fa fa-fast-forward"></i>
 						</button>
 					</div>
 				</div>
 				<hr/>
+				<!--
 				<div class="col-sm-3" ng-show="selected">
 					<button class="btn btn-danger form-control" ng-click="remove(selected.id)">
 						<i class="fa fa-trash-o"></i> Remove this Song
 					</button>
 				</div>
+				-->
 				<div class="col-sm-3 well">
 					<hr>
 					<table class = "table table-striped">
 						<thead>
 							<tr>
-								<th></th>
 								<th>Title</th>
 								<th>Artist</th>
 								<th>Votes</th>
@@ -108,10 +102,7 @@
 						</thead>
 						<tbody>
 							<tr ng-class="{success: s.title == selected.title}" ng-repeat="s in songs">
-								<td>
-										<button type="button" id="button_song_play_{{ s.id }}" class="btn" ng-click="get(s.id)"><img src="static/img/play-icon.png" height="30em" width="30em"></button>
-								</td>
-								<td><a href="" ng-click="get(s.id)">{{s.title}}</a></td>
+								<td>{{s.title}}</td>
 								<td>{{s.artist}}</a></td>
 								<td>
 									<button class="btn btn-success-outline" ng-click="like(s.id)">
@@ -125,16 +116,14 @@
 					<button class="btn btn-primary pull-right" ng-click="add()">
 						<i class="fa fa-plus"></i> Add song
 					</button>
+					<br/>
+					<br/>
 				</div>
 			</div>
 		</div>
-	<script src="static/js/jquery.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="static/js/bootstrap.min.js"></script>
-	<script src="http://code.angularjs.org/1.2.10/angular-resource.min.js"></script>
 	<script src="scripts/controller.js"></script>
-	<script src="scripts/player.js"></script>
-	<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script src="static/js/ui-bootstrap-1.3.1.min.js"></script>
+	<script src="http://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
 	</body>
 </html>
