@@ -2,6 +2,7 @@
 var myapp = new angular.module("myapp", ["ngResource", "ui.bootstrap"]);
 myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, $resource, $filter){
 
+	//TODO: Create variable for popping off top song on liist and displaying in player
 	var Song = $resource("/songs/:id", {id: '@id'}, {});
 	//var playerState = 'stop';
 	$scope.playing = false;
