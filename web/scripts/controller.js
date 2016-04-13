@@ -4,6 +4,7 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 
 	var Song = $resource("/songs/:id", {id: '@id'}, {});
 	//var playerState = 'stop';
+	$scope.playing = false;
 	$scope.selected = null;
 	$scope.list = function(id){
 		Song.query(function(data){
@@ -79,4 +80,8 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 		$scope.selected = null;
 		$scope.list();
 	};
+	$scope.player = function(){
+		if($scope.play){$scope.play = false;}
+		else{$scope.play = true;}
+	}
 }]);

@@ -199,6 +199,8 @@ func main() {
 	// bootstrap some data
 	songs = append(songs, Song{"Hey Jude", "The Beatles", 1, getNextId()})
 	songs = append(songs, Song{"Train in Vain", "The Clash", 1, getNextId()})
+	songs = append(songs, Song{"Hello", "Adele", 4, getNextId()})
+	songs = append(songs, Song{"Sweet Child O'Mine", "Guns 'n Roses", 2, getNextId()})
 
 	log.Printf("Running on port %d\n", *port)
 
