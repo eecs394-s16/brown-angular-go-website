@@ -108,7 +108,7 @@
 								<td>{{s.title}}</td>
 								<td>{{s.artist}}</a></td>
 								<td>
-									<button class="btn btn-success-outline" ng-click="like(s.id)">
+									<button style = "background: {{currentLikeState.text}}" class="btn btn-success-outline" ng-click="like(s.id)">
 										&hearts;
 									</button>
 									{{s.votes}}
