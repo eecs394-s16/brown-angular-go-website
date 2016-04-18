@@ -63,24 +63,12 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 		song.$save();
 		$scope.list(id);
 	};
-		var i = 0;
-	var like_states =[
-	    { text : "rgb(221,221,221)" },
-	    { text : "rgb(95,95,95)" }
-	];
-
-	$scope.currentLikeState = like_states[i];
-
 	$scope.like = function(id){
-		 i = (i + 1) % like_states.length;
-    	$scope.currentLikeState = like_states[i];
-		
 		var song = $filter("filter")($scope.songs, {id: id})[0];
 		console.log('song', song);
-		(i==1)? song.votes = song.votes + 1:song.votes = song.votes -1;
+		song.votes = song.votes + 1;
 		song.$save();
-		$scope.list(id);
-
+    	$scope.list(id);
 
 	};
 	$scope.remove = function(id){
