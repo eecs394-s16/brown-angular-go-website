@@ -20,7 +20,6 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 	};
 	$scope.list();
 	$scope.get = function(id){
-		// NOAH added this to get the song by song.id not index in list
 		var song = $filter("filter")($scope.songs, {id: id})[0];
 		Song.get({id: song.id}, function(data){
 			$scope.selected = data;
@@ -28,7 +27,6 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 		});
 
 		buttonPlayPress(id);
-		//buttonSongPlayPress(id);
 	};
 	$scope.add = function() {
 		var title = prompt("Enter the song's title.");
@@ -47,8 +45,6 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 		$scope.list();
 	};
 	$scope.update = function(id) {
-		// NOAH commented this out to update songs by song.id not position in list
-		//var song = $scope.songs[idx];
 		var song = $filter("filter")($scope.songs, {id: id})[0];
 		var title = prompt("Enter a new title", song.title);
 		if(title == null) {
@@ -72,10 +68,6 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 
 	};
 	$scope.remove = function(id){
-		//$scope.songs[idx].$delete();
-		//$scope.selected = null;
-
-		// NOAH added to remove song by song.id not list index
 		var song = $filter("filter")($scope.songs, {id: id})[0];
 		song.$delete();
 		$scope.selected = null;
@@ -86,3 +78,122 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 		else{$scope.play = true;}
 	}
 }]);
+
+myapp.controller('NavCtrl', function($scope) {
+	$scope.state = false;
+
+	$scope.toggleState = function() {
+		$scope.state = !$scope.state;
+	};
+});
+
+myapp.directive('sidebarDirective', function() {
+	return {
+		link: function (scope, element, attr) {
+			scope.$watch(attr.sidebarDirective, function(newVal) {
+				if(newVal) {
+					element.addClass('show');
+					return;
+				}
+				element.removeClass('show');
+			});
+		}
+	};
+});
+
+myapp.directive('tab', function() {
+	return {
+		restrict: 'E',
+		transclude: true,
+		template: '<div role="tabpanel" ng-show="active" ng-transclude></div>',
+		require: '^tabset',
+		scope: {
+			heading:'@'
+		},
+		link: function(scope, elem, attr, tabsetCtrl) {
+			scope.active = false
+
+			scope.disabled = false
+			if(attr.disable) {
+				attr.$observe('disable', function(value) {
+					scope.disabled = (value !== 'false')
+				})
+			}
+
+			tabsetCtrl.addTab(scope)
+		}
+	}
+});
+myapp.directive('tabset', function() {
+	return {
+		restrict: 'E',
+		transclude: true,
+		scope: {
+			type:'@',
+			vertical:'@',
+			justified:'@',
+		},
+		templateUrl: 'tabset.html',
+		bindToController: true,
+		controllerAs: 'tabset',
+		controller: function() {
+			var self = this
+			self.tabs = []
+			self.addTab = function addTab(tab) {
+				self.tabs.push(tab)
+
+				if (self.tabs.length == 1) {
+					tab.active = true;
+				}
+			}
+
+			self.classes = {}
+			if (self.type == 'pills') {
+				self.classes['nav-pills'] = true 
+			} else { 
+				self.classes['nav-tabs'] = true 
+			}
+
+			if (self.justified) {
+				self.classes['nav-justified'] = true
+			}
+			if (self.vertical) {
+				self.classes['nav-stacked'] = true
+			}
+
+			self.select = function(selectedTab) {
+
+				if (selectedTab.disabled) { return }
+
+				angular.forEach(self.tabs, function(tab){
+					if(tab.active && tab != selectedTab) {
+						tab.active = false;
+					}
+				})
+
+				selectedTab.active = true;
+			}
+
+		}
+	}
+});
+myapp.controller('NavCtrl', function($scope) {
+	$scope.state = false;
+
+	$scope.toggleState = function() {
+		$scope.state = !$scope.state;
+	};
+});
+myapp.directive('sidebarDirective', function() {
+	return {
+		link: function (scope, element, attr) {
+			scope.$watch(attr.sidebarDirective, function(newVal) {
+				if(newVal) {
+					element.addClass('show');
+					return;
+				}
+				element.removeClass('show');
+			});
+		}
+	};
+});
