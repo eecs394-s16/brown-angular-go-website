@@ -2,14 +2,17 @@
 var myapp = new angular.module("myapp", ["ngResource", "ui.bootstrap"]);
 myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, $resource, $filter){
 
-	//TODO: Create variable for popping off top song on liist and displaying in player
+	//TODO: Fix the playing song so it can not be adjusted in the queue
 	var Song = $resource("/songs/:id", {id: '@id'}, {});
 	//var playerState = 'stop';
+	$scope.topSong = null;
 	$scope.playing = false;
 	$scope.selected = null;
 	$scope.list = function(id){
 		Song.query(function(data){
-			$scope.songs = data;
+			$scope.songs = data.slice(1);
+			$scope.topSong = data[0];
+			$scope.remove(data[0].id);
 			// if(idx != undefined) {
 			// 	$scope.selected = $scope.songs[idx];
 			// 	$scope.selected.idx = idx;
