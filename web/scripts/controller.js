@@ -12,7 +12,8 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, 
 		Song.query(function(data){
 			$scope.songs = data.slice(1);
 			$scope.topSong = data[0];
-			$scope.remove(data[0].id);
+			// TODo: something like below for fixating the top value?
+			// $scope.remove(data[0].id);
 			// if(idx != undefined) {
 			// 	$scope.selected = $scope.songs[idx];
 			// 	$scope.selected.idx = idx;
