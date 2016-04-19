@@ -1,7 +1,9 @@
 // new dependency: ngResource is included just above
-var myapp = new angular.module("myapp", ["ngResource", "ui.bootstrap"]);
-myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, $resource, $filter){
-
+var myapp = angular.module("myapp", ["ngResource", "ui.bootstrap", "spotify"]);
+myapp.controller("MainCtl", ["$scope", "$resource", "$filter", "Spotify", function($scope, $resource, $filter, Spotify){
+	Spotify.getTrack('0eGsygTp906u18L0Oimnem').then(function (data) {
+  	console.log(data);
+	});
 	//TODO: Fix the playing song so it can not be adjusted in the queue
 	var Song = $resource("/songs/:id", {id: '@id'}, {});
 	//var playerState = 'stop';
