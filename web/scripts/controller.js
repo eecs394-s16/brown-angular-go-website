@@ -1,19 +1,26 @@
 // new dependency: ngResource is included just above
-var myapp = new angular.module("myapp", ["ngResource", "ui.bootstrap"]);
-myapp.controller("MainCtl", ["$scope", "$resource", "$filter", function($scope, $resource, $filter){
-
-	//TODO: Create variable for popping off top song on liist and displaying in player
+var myapp = angular.module("myapp", ["ngResource", "ui.bootstrap", "spotify"]);
+myapp.controller("MainCtl", ["$scope", "$resource", "$filter", "Spotify", function($scope, $resource, $filter, Spotify){
+	Spotify.getTrack('0eGsygTp906u18L0Oimnem').then(function (data) {
+  		console.log(data);
+	});
+	//TODO: Fix the playing song so it can not be adjusted in the queue
 	var Song = $resource("/songs/:id", {id: '@id'}, {});
 	//var playerState = 'stop';
+	$scope.topSong = null;
 	$scope.playing = false;
 	$scope.selected = null;
 	$scope.list = function(id){
 		Song.query(function(data){
-			$scope.songs = data;
+			$scope.songs = data.slice(1);
+			$scope.topSong = data[0];
+			// TODo: something like below for fixating the top value?
+			// $scope.remove(data[0].id);
 			// if(idx != undefined) {
 			// 	$scope.selected = $scope.songs[idx];
 			// 	$scope.selected.idx = idx;
 			// }
+			console.log($scope.topSong);
 		}, function(error){
 			alert(error.data);
 		});
