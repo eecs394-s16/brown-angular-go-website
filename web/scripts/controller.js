@@ -2,7 +2,7 @@
 var myapp = angular.module("myapp", ["ngResource", "ui.bootstrap", "spotify"]);
 myapp.controller("MainCtl", ["$scope", "$resource", "$filter", "Spotify", function($scope, $resource, $filter, Spotify){
 	Spotify.getTrack('0eGsygTp906u18L0Oimnem').then(function (data) {
-  	console.log(data);
+  		console.log(data);
 	});
 	//TODO: Fix the playing song so it can not be adjusted in the queue
 	var Song = $resource("/songs/:id", {id: '@id'}, {});
@@ -20,6 +20,7 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", "Spotify", functi
 			// 	$scope.selected = $scope.songs[idx];
 			// 	$scope.selected.idx = idx;
 			// }
+			console.log($scope.topSong);
 		}, function(error){
 			alert(error.data);
 		});
