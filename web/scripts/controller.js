@@ -66,10 +66,14 @@ myapp.controller("MainCtl", ["$scope", "$resource", "$filter", "Spotify", functi
 		song.$save();
 		$scope.list(id);
 	};
+$scope.liked = [];
+	for (var i = 0; i < 100; i++) $scope.liked[i] = false;
 	$scope.like = function(id){
+		
+		$scope.liked[id]= !$scope.liked[id];
 		var song = $filter("filter")($scope.songs, {id: id})[0];
 		console.log('song', song);
-		song.votes = song.votes + 1;
+		($scope.liked[id])? song.votes = song.votes + 1:song.votes = song.votes -1;
 		song.$save();
     	$scope.list(id);
 
