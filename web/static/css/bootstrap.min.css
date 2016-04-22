@@ -50,6 +50,10 @@
 }
 .navigation-items a:hover {
     background-color : #222;
+    text-decoration : none;
+}
+.navigation-items a:active {
+    text-decoration : none;
 }
 .player{
   margin: 50px 0;
